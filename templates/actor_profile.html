@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ actor }} | AURAREC AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body{ 
+            background-color: #121212; 
+            color: white;
+        }
+        .movie-card {
+            transition: transform 0.3s; 
+            border: 1px solid #333; 
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+            border-color: #0d6efd;
+        }
+        /* Custom Scrollbar for a Dark Theme Look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #121212;
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0d6efd;
+}
+
+/* Glassmorphism Effect for the Filter Box */
+.filter-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Enhanced Movie Cards */
+.movie-card {
+    border: none;
+    background: #1c1c1c;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.movie-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #0d6efd;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.3s;
+}
+
+.movie-card:hover .card-img-top {
+    filter: grayscale(0%);
+}
+
+/* Range Slider Styling (Blue Accent) */
+.form-range::-webkit-slider-thumb {
+    background: #0d6efd;
+    box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+}
+
+.form-range::-moz-range-thumb {
+    background: #0d6efd;
+}
+
+/* Genre Header Styling */
+.genre-section h3 {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+}
+    </style>
+</head>
+<body>
+
+    <div class="filter-container p-4 rounded mb-5">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">CineStream AI</a>
+            <a href="/" class="btn btn-outline-light btn-sm">Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="mb-4">Films of <span class="text-primary">{{ actor }}</span></h1>
+
+        <div class="bg-dark p-4 rounded border border-secondary mb-5">
+            <h4 class="mb-3"><i class="fas fa-calendar-alt text-primary"></i> Filter by Career Phase</h4>
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <input type="range" class="form-range" min="1950" max="2026" value="1950" id="yearSlider" oninput="filterByYear(this.value)">
+                </div>
+                <div class="col-md-4">
+                    <span class="badge bg-primary fs-5 w-100">Released Since: <span id="yearDisplay">1950</span></span>
+                </div>
+            </div>
+        </div>
+
+        {% for genre, movies in grouped_movies.items() %}
+        <div class="genre-section mb-5">
+            <h3 class="text-warning border-bottom border-secondary pb-2 mb-4">{{ genre }}</h3>
+            <div class="row row-cols-2 row-cols-md-5 g-4">
+                {% for movie in movies %}
+                <div class="col movie-item" data-year="{{ movie.year }}">
+                    <div class="card movie-card bg-dark text-white h-100">
+                       <img src="{{ movie.poster }}" 
+                         class="card-img-top" 
+                        alt="{{ movie.title }}" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/300x450/1c1c1c/white?text=Poster+Not+Found';">
+                        <div class="card-body">
+                            <h6 class="card-title text-truncate">{{ movie.title }}</h6>
+                            <small class="text-muted"><i class="far fa-clock"></i> {{ movie.year }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+    function filterByYear(selectedYear) {
+        // Update the display text
+        document.getElementById('yearDisplay').innerText = selectedYear;
+        
+        // Find all movie columns
+        const movieItems = document.querySelectorAll('.movie-item');
+        
+        movieItems.forEach(item => {
+            const movieYear = parseInt(item.getAttribute('data-year'));
+            
+            // Logic: If movie is newer or equal to slider, show it
+            if (movieYear >= selectedYear) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+
+        // Optional: Hide genre headers if all movies in that genre are hidden
+        document.querySelectorAll('.genre-section').forEach(section => {
+            const visibleMovies = section.querySelectorAll('.movie-item[style="display: block;"]').length;
+            section.style.display = (visibleMovies === 0 && selectedYear > 1950) ? "none" : "block";
+        });
+    }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

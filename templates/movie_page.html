@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }} - AURAREC AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-black: #080808;
+            --card-bg: #141414;
+            --netflix-red: #E50914;
+        }
+
+        body { 
+            background-color: var(--bg-black); 
+            color: white; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* 1. Poster Container (Image yahan fit hogi) */
+        .banner-container {
+            width: 100%;
+            height: 550px; /* Standard Height */
+            background: #000;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 2px solid #222;
+        }
+
+        .banner-img {
+            width: 100%; /* Pura breadth gherne ke liye */
+            height: 550px; /* Height fix rakho */
+            object-fit: cover; /* Isse side ki black jagah bhar jayegi */
+            object-position: center 20%; /* Isse poster kabhi cut nahi hoga */
+        }
+
+        /* 2. Details Section (Poster ke niche) */
+        .movie-details-header {
+            padding: 40px 6%;
+            background: linear-gradient(to bottom, #111, var(--bg-black));
+        }
+
+        .movie-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .meta-data {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            color: #bbb;
+        }
+
+        .rating-badge {
+            color: #46d369;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .play-btn {
+            background: white;
+            color: black;
+            padding: 12px 35px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .play-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            transform: scale(1.05);
+        }
+
+        /* 3. Recommendations Grid */
+        .recommendation-section {
+            padding: 0 6% 60px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--netflix-red);
+            padding-left: 15px;
+        }
+
+        .movie-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 100%;
+            border: 1px solid #222;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            border-color: #444;
+        }
+
+        .card-img-container {
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 12px;
+        }
+
+        .card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        a { text-decoration: none; color: inherit; }
+    </style>
+</head>
+<body>
+
+    <nav class="p-3 px-5">
+        <a href="/" style="font-size: 1.5rem; font-weight: 900; color: #E50914;">CINESTREAM <span style="color: white;">AI</span></a>
+    </nav>
+
+    <div class="banner-container">
+        <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="banner-img">
+    </div>
+
+    <div class="movie-details-header">
+        <h1 class="movie-title">{{ movie.title }}</h1>
+        
+        <div class="meta-data">
+            <span class="rating-badge">Rating: {{ movie.rating }}</span>
+            <span>{{ movie.year }}</span>
+            <span class="badge bg-secondary">{{ movie.Industry }}</span>
+            <span>{{ movie.mood }}</span>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{{ movie.trailer_url }}" target="_blank" class="play-btn">
+                <i class="fas fa-play"></i> Play Trailer
+            </a>
+            <a href="/" class="play-btn" style="background: rgba(100,100,100,0.5); color: white;">
+                <i class="fas fa-home"></i> Home
+            </a>
+        </div>
+    </div>
+
+    <div class="recommendation-section">
+        <h3 class="section-title">More Like This</h3>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4">
+            {% for m in related %}
+            <div class="col">
+                <a href="/movie/{{ m.movieId }}">
+                    <div class="movie-card">
+                        <div class="card-img-container">
+                            <img src="{{ m.poster }}" class="card-img" alt="{{ m.title }}">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">{{ m.title }}</div>
+                            <div class="card-meta">
+                                <span class="text-warning"><i class="fas fa-star"></i> {{ m.rating }}</span>
+                                <span class="float-end">{{ m.year }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="text-center py-5 text-muted border-top border-secondary mt-5">
+        <p>&copy; 2026 AURAREC AI - BCA Final Project</p>
+    </footer>
+
+</body>
+</html>
