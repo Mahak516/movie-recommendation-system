@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, redirect, url_for
 os.environ['TF_USE_LEGACY_KERAS'] = '1'
 app = Flask(__name__)
 app.secret_key = 'ipu_project_secret_key'
-TMDB_API_KEY = 'da26246f79a9f2c547c2ada13e5b39a5' 
+TMDB_API_KEY = "TMDB_API_KEY" 
 
 def get_tmdb_results(query):
     # 1. Pehle check karo ki ye koi Actor (Person) toh nahi hai
