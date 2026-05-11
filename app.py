@@ -101,7 +101,7 @@ if os.path.exists('enhanced_movie_weights.weights.h5'):
 def get_omdb(title):
     clean = re.sub(r'\s*\(\d{4}\)', '', title).strip()
     try:
-        r = requests.get(f"http://www.omdbapi.com/?t={clean}&apikey=58664459", timeout=2).json()
+        r = requests.get(f"http://www.omdbapi.com/?t={clean}&apikey="your_api_key", timeout=2).json()
         if r.get('Response') == 'True':
             return {'poster': r.get('Poster'), 'plot': r.get('Plot'), 'rating': r.get('imdbRating')}
     except: pass
