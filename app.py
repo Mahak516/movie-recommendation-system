@@ -10,7 +10,8 @@ from flask import Flask, render_template, request, redirect, url_for
 os.environ['TF_USE_LEGACY_KERAS'] = '1'
 app = Flask(__name__)
 app.secret_key = 'ipu_project_secret_key'
-TMDB_API_KEY = "TMDB_API_KEY" 
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "TMDB_API_KEY")
+OMDB_API_KEY = os.environ.get("OMDB_API_KEY", "your_api_key")
 
 def get_tmdb_results(query):
     # 1. Pehle check karo ki ye koi Actor (Person) toh nahi hai
@@ -101,7 +102,7 @@ if os.path.exists('enhanced_movie_weights.weights.h5'):
 def get_omdb(title):
     clean = re.sub(r'\s*\(\d{4}\)', '', title).strip()
     try:
-        r = requests.get(f"http://www.omdbapi.com/?t={clean}&apikey="your_api_key", timeout=2).json()
+        r = requests.get(f"http://www.omdbapi.com/?t={clean}&apikey={OMDB_API_KEY}", timeout=2).json()
         if r.get('Response') == 'True':
             return {'poster': r.get('Poster'), 'plot': r.get('Plot'), 'rating': r.get('imdbRating')}
     except: pass
