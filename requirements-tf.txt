@@ -1,0 +1,4 @@
+-r requirements.txt
+# Optional: only needed for RECOMMENDER=tf (the TensorFlow embedding engine).
+tensorflow>=2.16
+tf-keras>=2.16
