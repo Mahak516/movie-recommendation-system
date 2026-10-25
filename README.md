@@ -1,4 +1,5 @@
-# AuraRec AI: Movie Recommendation Web App
+Live demo:
+https://movie-recommendation-system-3xmj.onrender.com# AuraRec or cinestream ai AI: Movie Recommendation Web App
 
 Flask web app that recommends movies from an 11,810-title catalog (Hollywood, Bollywood, Korean, Chinese, Anime). Recommendations are ranked by TF-IDF cosine similarity over keywords and cast, with optional re-ranking by industry, mood and shared cast, and a like/dislike feedback loop. The original TensorFlow embedding model is kept as an optional engine.
 
