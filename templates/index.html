@@ -81,7 +81,11 @@
     </div>
 </nav>
 <div class="container-fluid pb-5">
-    
+
+    {% if error %}
+    <div class="alert alert-warning mx-5" role="alert">{{ error }} Try another title or use the search bar.</div>
+    {% endif %}
+
     {% if results %}
     <h3 class="section-title text-danger">🎯 AI Suggestions for: "{{ query }}"</h3>
     <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3 px-5">

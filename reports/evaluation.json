@@ -1,0 +1,143 @@
+{
+  "seed": 42,
+  "k": 10,
+  "relevance_rule": "genre Jaccard >= 0.5",
+  "catalog_size": 11810,
+  "quick": false,
+  "overall": [
+    {
+      "strategy": "random",
+      "n_queries": 1000,
+      "precision@10": 0.1114,
+      "hit_rate@10": 0.593,
+      "ndcg@10": 0.1653,
+      "catalog_coverage": 0.576,
+      "same_industry_share": 0.7186,
+      "hollywood_share_of_recs": 0.8483,
+      "hollywood_share_of_catalog": 0.845
+    },
+    {
+      "strategy": "most popular",
+      "n_queries": 1000,
+      "precision@10": 0.095,
+      "hit_rate@10": 0.545,
+      "ndcg@10": 0.1404,
+      "catalog_coverage": 0.0008,
+      "same_industry_share": 0.836,
+      "hollywood_share_of_recs": 1.0,
+      "hollywood_share_of_catalog": 0.845
+    },
+    {
+      "strategy": "TF-IDF cosine (no boosts)",
+      "n_queries": 1000,
+      "precision@10": 0.2877,
+      "hit_rate@10": 0.861,
+      "ndcg@10": 0.3172,
+      "catalog_coverage": 0.4574,
+      "same_industry_share": 0.8613,
+      "hollywood_share_of_recs": 0.8287,
+      "hollywood_share_of_catalog": 0.845
+    },
+    {
+      "strategy": "TF-IDF + /recommend boosts",
+      "n_queries": 1000,
+      "precision@10": 0.3454,
+      "hit_rate@10": 0.885,
+      "ndcg@10": 0.3655,
+      "catalog_coverage": 0.4722,
+      "same_industry_share": 0.9002,
+      "hollywood_share_of_recs": 0.8422,
+      "hollywood_share_of_catalog": 0.845
+    },
+    {
+      "strategy": "TF-IDF + movie-page boosts",
+      "n_queries": 1000,
+      "precision@10": 0.461,
+      "hit_rate@10": 0.925,
+      "ndcg@10": 0.4494,
+      "catalog_coverage": 0.4616,
+      "same_industry_share": 0.951,
+      "hollywood_share_of_recs": 0.8373,
+      "hollywood_share_of_catalog": 0.845
+    },
+    {
+      "strategy": "TF-IDF + movie-page boosts, no mood",
+      "n_queries": 1000,
+      "precision@10": 0.2856,
+      "hit_rate@10": 0.857,
+      "ndcg@10": 0.316,
+      "catalog_coverage": 0.4592,
+      "same_industry_share": 0.9592,
+      "hollywood_share_of_recs": 0.8402,
+      "hollywood_share_of_catalog": 0.845
+    }
+  ],
+  "by_industry": {
+    "ANIME": {
+      "catalog_titles": 979,
+      "TF-IDF cosine (no boosts)": {
+        "n_queries": 150,
+        "precision@10": 0.4267,
+        "same_industry_share": 0.6407
+      },
+      "TF-IDF + movie-page boosts": {
+        "n_queries": 150,
+        "precision@10": 0.6187,
+        "same_industry_share": 0.8787
+      }
+    },
+    "BOLLYWOOD": {
+      "catalog_titles": 66,
+      "TF-IDF cosine (no boosts)": {
+        "n_queries": 66,
+        "precision@10": 0.3091,
+        "same_industry_share": 0.5545
+      },
+      "TF-IDF + movie-page boosts": {
+        "n_queries": 66,
+        "precision@10": 0.4197,
+        "same_industry_share": 0.7697
+      }
+    },
+    "CHINESE": {
+      "catalog_titles": 344,
+      "TF-IDF cosine (no boosts)": {
+        "n_queries": 150,
+        "precision@10": 0.2687,
+        "same_industry_share": 0.4533
+      },
+      "TF-IDF + movie-page boosts": {
+        "n_queries": 150,
+        "precision@10": 0.424,
+        "same_industry_share": 0.772
+      }
+    },
+    "HOLLYWOOD": {
+      "catalog_titles": 9980,
+      "TF-IDF cosine (no boosts)": {
+        "n_queries": 150,
+        "precision@10": 0.278,
+        "same_industry_share": 0.912
+      },
+      "TF-IDF + movie-page boosts": {
+        "n_queries": 150,
+        "precision@10": 0.4613,
+        "same_industry_share": 0.9707
+      }
+    },
+    "KOREAN": {
+      "catalog_titles": 441,
+      "TF-IDF cosine (no boosts)": {
+        "n_queries": 150,
+        "precision@10": 0.2807,
+        "same_industry_share": 0.404
+      },
+      "TF-IDF + movie-page boosts": {
+        "n_queries": 150,
+        "precision@10": 0.4487,
+        "same_industry_share": 0.6367
+      }
+    }
+  },
+  "eval_seconds": 9.7
+}
